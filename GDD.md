@@ -23,6 +23,8 @@
 
 ## 1. High Concept y Visión Inicial
 > *Nota: Es sumamente importante que en esta primera página haya un dibujo, arte conceptual o screenshot que dé la idea de cómo es el juego para que se entienda sin necesidad de leer mucho.*
+> <img width="925" height="713" alt="image" src="https://github.com/user-attachments/assets/0f020b63-45b3-4251-9fd5-a41d715c0405" />
+
 
 **[Insertar aquí imagen de pre-producción generada por IA que represente el mood/escena del juego]**
 

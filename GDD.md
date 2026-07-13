@@ -7,9 +7,9 @@
 
 # GAME DESIGN DOCUMENT (GDD)
 
-**Nombre del Juego:** [Ingresa el nombre del juego]  
-**Versión:** 0.0.0  
-**Fecha de actualización:** [DD/MM/AAAA]
+**Nombre del Juego:** [Defensa de Colonias Espaciales]  
+**Versión:** 1.0.0  
+**Fecha de actualización:** [13/07/2026]
 
 ## Ficha del Grupo
 | Apellido y Nombre Completo | Función dentro del grupo |

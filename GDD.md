@@ -14,21 +14,20 @@
 ## Ficha del Grupo
 | Apellido y Nombre Completo | Función dentro del grupo |
 | :--- | :--- |
-| [Nombre del alumno] | Game Designer / Level Design |
-| [Nombre del alumno] | Artist |
-| [Nombre del alumno] | Programmer |
-| [Nombre del alumno] | Producer |
+| [Alejandro Spengler] | Game Designer / Level Design |
+| [Alejandro Spengler] | Artist |
+| [Alejandro Spengler] | Programmer |
+| [Alejandro Spengler] | Producer |
 
 ---
 
 ## 1. High Concept y Visión Inicial
-> *Nota: Es sumamente importante que en esta primera página haya un dibujo, arte conceptual o screenshot que dé la idea de cómo es el juego para que se entienda sin necesidad de leer mucho.*
+
+High Concept: "Defensa de Colonias Espaciales es un Tower Defense de ciencia ficción donde el jugador controla una inteligencia artificial militar para proteger las últimas colonias humanas mediante la construcción estratégica de torretas, la gestión de recursos y la adaptación a eventos dinámicos y oleadas de enemigos extraterrestres."
+
 > <img width="925" height="713" alt="image" src="https://github.com/user-attachments/assets/0f020b63-45b3-4251-9fd5-a41d715c0405" />
 
 
-**[Insertar aquí imagen de pre-producción generada por IA que represente el mood/escena del juego]**
-
-**High Concept:** [El núcleo del juego en una frase. Debe encapsular la esencia del proyecto de forma clara y atractiva, destacando lo que lo hace único].
 
 ---
 

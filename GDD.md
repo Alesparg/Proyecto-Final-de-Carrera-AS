@@ -398,21 +398,27 @@ Defensa de Colonias Espaciales busca ofrecer una experiencia estratégica, desaf
 Las principales respuestas estéticas y emocionales que se buscan generar son:
 
 **Desafío**
+
 El jugador deberá analizar continuamente la situación del campo de batalla para decidir dónde construir nuevas torretas, cuáles mejorar y cómo administrar los recursos disponibles. La aparición de enemigos con habilidades diferentes y el aumento progresivo de la dificultad mantendrán una sensación constante de reto.
 
 **Tensión**
+
 Cada oleada incrementará la presión sobre las defensas de la colonia. La posibilidad de que el núcleo energético sea destruido y la aparición de eventos dinámicos inesperados obligarán al jugador a reaccionar rápidamente y adaptar su estrategia en tiempo real.
 
 **Satisfacción**
+
 Superar una oleada difícil, derrotar a un jefe o completar una misión después de una planificación exitosa generará una sensación de logro. Asimismo, desbloquear nuevas tecnologías y mejorar las torretas reforzará la percepción de progreso y recompensará el esfuerzo del jugador.
 
 **Curiosidad**
+
 La incorporación gradual de nuevos enemigos, tecnologías y mejoras incentivará al jugador a experimentar con diferentes combinaciones de torretas y estrategias para descubrir cuáles resultan más efectivas en cada situación.
 
 **Rejugabilidad**
+
 Cada partida ofrecerá una experiencia diferente gracias a la combinación de distintos tipos de enemigos, eventos dinámicos, mejoras disponibles y decisiones estratégicas del jugador. Esto fomentará volver a jugar para probar nuevas tácticas y obtener mejores resultados.
 
 **Inmersión**
+
 La ambientación futurista, los efectos visuales de los disparos y explosiones, la música de ciencia ficción y los efectos sonoros del combate buscarán transmitir la sensación de participar en una guerra espacial donde la supervivencia de la humanidad depende de las decisiones del jugador.
 
 En conjunto, estos elementos pretenden ofrecer una experiencia estratégica accesible para nuevos jugadores, pero con suficiente profundidad para mantener el interés de quienes buscan optimizar sus tácticas y superar desafíos cada vez más complejos
@@ -422,6 +428,7 @@ En conjunto, estos elementos pretenden ofrecer una experiencia estratégica acce
 
 ## 4. Arte, Audio y Bocetos
 <img width="925" height="1007" alt="image" src="https://github.com/user-attachments/assets/a1bcd2be-a4ea-4dab-aac2-64d780ca8006" />
+
 **Estilo Visual y Sonoro**: 
 
 Defensa de Colonias Espaciales adoptará un estilo artístico con una estética futurista inspirada en la ciencia ficción. Se utilizarán modelos de baja complejidad geométrica y texturas simples, lo que permitirá un buen rendimiento sin perder una identidad visual atractiva.
@@ -447,6 +454,7 @@ Los enemigos de la raza Vorak presentarán diseños diferenciados según su func
 La interfaz de usuario será minimalista y clara, mostrando únicamente la información necesaria durante la partida: recursos disponibles, vida del núcleo energético, oleadas restantes, mejoras activas y opciones de construcción.
 
 **Estilo Sonoro**
+
 El apartado sonoro buscará reforzar la ambientación de una guerra espacial y proporcionar información al jugador durante la partida.
 
 La música estará compuesta por temas instrumentales de ciencia ficción con elementos electrónicos y orquestales. Durante los momentos de preparación tendrá un ritmo tranquilo, mientras que aumentará su intensidad conforme avancen las oleadas y aparezcan enemigos más peligrosos o jefes finales.

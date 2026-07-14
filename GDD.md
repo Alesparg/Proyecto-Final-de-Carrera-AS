@@ -36,7 +36,9 @@ High Concept: "Defensa de Colonias Espaciales es un Tower Defense de ciencia fic
 ### 2.1 Objetivo del Proyecto
 
 El objetivo de este proyecto es desarrollar un videojuego del género Tower Defense ambientado en un universo de ciencia ficción, donde el jugador debe proteger colonias espaciales de invasiones extraterrestres mediante la construcción estratégica de torretas, la gestión de recursos y la investigación de nuevas tecnologías.
+
 A nivel de producto, se busca crear una experiencia entretenida, accesible y desafiante, que combine planificación estratégica, progresión constante y una alta rejugabilidad gracias a la variedad de enemigos, mejoras y eventos dinámicos que pueden ocurrir durante las partidas.
+
 A nivel académico, el proyecto tiene como finalidad aplicar los conocimientos adquiridos durante la carrera de Tecnicatura en Diseño y Programación de Videojuegos, poniendo en práctica conceptos de diseño de videojuegos, programación, desarrollo de mecánicas, diseño de interfaces, balance de juego y gestión de proyectos. Además, busca servir como experiencia integral de desarrollo y como una pieza representativa para el portafolio profesional del alumno
 
 ### 2.2 Diseño e investigación

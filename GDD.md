@@ -43,36 +43,60 @@ A nivel académico, el proyecto tiene como finalidad aplicar los conocimientos a
 
 ### 2.2 Diseño e investigación
 **Definición de idea**
+
 Defensa de Colonias Espaciales es un videojuego de estrategia del género Tower Defense ambientado en un futuro donde la humanidad ha abandonado la Tierra y sobrevive en colonias espaciales distribuidas por la galaxia. El jugador controla a ATLAS, una inteligencia artificial militar encargada de proteger los núcleos energéticos de las colonias frente a la invasión de una raza extraterrestre. Para lograrlo deberá construir y mejorar torretas, administrar recursos, investigar nuevas tecnologías y adaptarse a diferentes tipos de enemigos y eventos dinámicos que modificarán el desarrollo de cada partida.
 
-Género
+**Género**
+
 •	Estrategia.
+
 •	Tower Defense.
+
 •	Ciencia ficción.
-Referencias
+
+**Referencias**
+
 El proyecto toma inspiración de diversos juegos del género Tower Defense y de la estética de la ciencia ficción:
+
 •	Kingdom Rush: por su sistema de defensa mediante torretas, variedad de enemigos y progresión.
+
 •	Bloons TD 6: por su sistema de mejoras, árboles de habilidades y dificultad progresiva.
+
 •	Plants vs. Zombies: por la administración de recursos y la accesibilidad de sus mecánicas.
+
 •	Defense Grid: The Awakening: por su ambientación futurista y el enfoque estratégico.
+
 •	También toma como referencia la estética de películas de ciencia ficción ambientadas en conflictos espaciales, con tecnología avanzada, estaciones espaciales y batallas entre la humanidad y civilizaciones extraterrestres.
-Público objetivo
+
+**Público objetivo**
+
 El juego está dirigido a jugadores de entre 12 y 35 años que disfrutan de títulos de estrategia y planificación. Está pensado tanto para jugadores casuales que buscan partidas de entre 10 y 20 minutos como para jugadores más experimentados que desean optimizar estrategias, desbloquear mejoras y superar desafíos cada vez más complejos.
-Mecánicas principales
+
+**Mecánicas principales**
+
 Las acciones que el jugador realizará de forma constante durante la partida son:
+
 •	Construir torretas defensivas en posiciones estratégicas.
+
 •	Administrar la energía y los créditos disponibles.
+
 •	Mejorar las torretas existentes para aumentar su eficacia.
+
 •	Defender el núcleo energético de cada colonia frente a oleadas de enemigos.
+
 •	Adaptar la estrategia según el tipo de enemigo y los eventos dinámicos que ocurran durante la misión.
+
 •	Desbloquear nuevas tecnologías y mejoras permanentes para afrontar niveles cada vez más difíciles.
 
 
 ### 2.3 Concepto del Juego
 Defensa de Colonias Espaciales transcurre en un futuro lejano donde la humanidad ha agotado los recursos de la Tierra y se ha visto obligada a colonizar distintos sectores de la galaxia. Estas colonias representan los últimos refugios de la civilización humana, pero una poderosa raza extraterrestre conocida como los Vorak inicia una invasión con el objetivo de conquistar el espacio y destruir toda presencia humana.
+
 Ante esta amenaza, se activa ATLAS (Autonomous Tactical Logistic And Security System), una inteligencia artificial militar diseñada para coordinar la defensa de las colonias. El jugador asume el control de ATLAS y debe proteger los núcleos energéticos de cada colonia utilizando una combinación de estrategia, administración de recursos y tecnología avanzada.
+
 El núcleo del gameplay consiste en planificar cuidadosamente la ubicación de las torretas, mejorar las defensas y adaptarse a las distintas oleadas de enemigos. Cada tipo de unidad enemiga presenta características propias, por lo que el jugador deberá modificar constantemente su estrategia para responder de manera eficiente a cada amenaza.
 A medida que se completan misiones, se obtienen créditos y tecnologías que permiten desbloquear nuevas torretas, habilidades y mejoras permanentes. Además, durante las partidas pueden producirse eventos dinámicos, como tormentas solares, lluvias de meteoritos o interferencias cósmicas, que alteran las condiciones del combate y obligan al jugador a replantear su estrategia en tiempo real.
+
 El principal atractivo del juego es combinar una experiencia de estrategia accesible con una progresión constante y una alta rejugabilidad. La variedad de enemigos, mejoras, mapas y eventos hace que cada partida presente nuevos desafíos, incentivando al jugador a experimentar diferentes configuraciones defensivas para proteger el futuro de la humanidad.
 
 
@@ -91,42 +115,74 @@ Las siguientes premisas establecen las reglas fundamentales del universo y del d
 
 ### 2.5 Condiciones del Desarrollo
 El desarrollo de Defensa de Colonias Espaciales se realizará utilizando herramientas y metodologías que permitan organizar el trabajo de manera eficiente y cumplir con los objetivos académicos del proyecto.
-Herramientas de desarrollo
+
+**Herramientas de desarrollo**
+
 •	Motor gráfico: Godot
+
 •	Lenguaje de programación: GDScript y C#.
+
 •	Editor de código:Godot.
+
 •	Control de versiones: Git.
+
 •	Repositorio remoto: GitHub para almacenar el código fuente y mantener un historial de cambios del proyecto.
+
 •	Herramientas de diseño: Diagrams.net para diagramas y documentación, y herramientas de edición de imágenes según las necesidades del proyecto.
-Metodología de trabajo
+
+**Metodología de trabajo**
+
 El proyecto seguirá una metodología de desarrollo iterativa e incremental. Cada etapa permitirá implementar, probar y mejorar las diferentes mecánicas del juego de forma progresiva. Se priorizará la creación de un prototipo funcional y, posteriormente, la incorporación de nuevas características, mejoras de jugabilidad y corrección de errores.
-Planificación y tiempos
+
+**Planificación y tiempos**
+
 El desarrollo se organizará en etapas que incluirán:
+
 •	Diseño y documentación del proyecto.
+
 •	Desarrollo de las mecánicas principales.
+
 •	Implementación de la interfaz de usuario y sistemas de progresión.
+
 •	Integración de recursos gráficos y sonoros.
+
 •	Pruebas, balance del juego y corrección de errores.
+
 •	Preparación de la versión final para su presentación.
-Limitaciones de hardware y software
+
+**Limitaciones de hardware y software**
+
 El proyecto estará orientado a computadoras personales con sistema operativo Windows. Se buscará que el juego funcione correctamente en equipos de gama media, evitando un consumo excesivo de recursos. Asimismo, se utilizarán modelos 3D, efectos visuales y sonidos optimizados para mantener un rendimiento estable durante las partidas.
 Al tratarse de un proyecto académico desarrollado por un único integrante, el alcance estará limitado a un conjunto de mecánicas y contenidos que puedan implementarse dentro del tiempo disponible, priorizando la calidad y estabilidad del producto final sobre la cantidad de contenido.
 
 
 ### 2.6 Alcance del proyecto
 El proyecto tendrá como resultado un Vertical Slice completamente funcional de Defensa de Colonias Espaciales. La entrega representará una versión reducida del videojuego final, pero incluirá todas las mecánicas principales necesarias para demostrar la experiencia de juego propuesta.
+
 La versión entregable incluirá:
+
 •	Menú principal con opciones básicas de navegación.
+
 •	Tutorial o nivel inicial para introducir las mecánicas fundamentales.
+
 •	Sistema de construcción y mejora de torretas.
+
 •	Diferentes tipos de enemigos con comportamientos propios.
+
 •	Sistema de oleadas con dificultad progresiva.
+
 •	Administración de recursos para construir y mejorar defensas.
+
 •	Eventos dinámicos que modifiquen el desarrollo de la partida.
+
 •	Interfaz de usuario funcional con indicadores de recursos, vida del núcleo y progreso de las oleadas.
+
 •	Sistema de victoria y derrota.
+
 •	Efectos visuales y sonoros básicos que acompañen la experiencia de juego.
+
 El proyecto no incluirá todas las colonias, enemigos, tecnologías, mapas ni contenidos previstos para una versión comercial completa. Estos elementos quedarán planteados como posibles ampliaciones futuras.
+
 El objetivo es entregar un producto estable y completamente jugable que demuestre las mecánicas principales, la identidad visual y la propuesta de diseño del videojuego, cumpliendo con los objetivos académicos del proyecto.
 
 ---

@@ -190,52 +190,98 @@ El objetivo es entregar un producto estable y completamente jugable que demuestr
 ## 3. Diseño Detallado del Juego
 
 ### 3.1 Elementos del Juego
-Jugador (ATLAS)
+**Jugador (ATLAS)**
+
 El jugador asume el control de ATLAS (Autonomous Tactical Logistic And Security System), una inteligencia artificial militar encargada de coordinar la defensa de las colonias espaciales. Su función consiste en construir y mejorar torretas, administrar recursos y desarrollar estrategias para detener las invasiones enemigas.
-Núcleo Energético
+
+**Núcleo Energético**
+
 Es el objetivo principal que debe protegerse durante cada misión. Representa la fuente de energía de la colonia. Si su vida llega a cero, la misión finaliza con una derrota.
-Torretas Defensivas
+
+**Torretas Defensivas**
+
 Las torretas constituyen la principal herramienta defensiva del jugador. Cada una posee características específicas, como daño, alcance, velocidad de ataque o efectos especiales. Pueden construirse en puntos determinados del mapa y mejorarse utilizando los recursos obtenidos durante la partida.
+
 Ejemplos de torretas:
+
 •	Torreta Láser: alta velocidad de disparo y daño constante.
+
 •	Torreta de Misiles: gran daño y largo alcance.
+
 •	Torreta de Plasma: ataques de área que afectan a múltiples enemigos.
-Enemigos
+
+**Enemigos**
+
 Los enemigos pertenecen a la raza extraterrestre Vorak e intentan destruir el núcleo energético de cada colonia. Cada tipo presenta diferentes atributos que obligan al jugador a adaptar su estrategia.
+
 Tipos de enemigos:
+
 •	Exploradores: rápidos y con poca resistencia.
+
 •	Guerreros Alienígenas: enemigos equilibrados.
+
 •	Tanques Biomecánicos: muy resistentes pero lentos.
+
 •	Naves Escudadas: poseen escudos que absorben daño.
+
 •	Saboteadores: pueden desactivar torretas temporalmente.
+
 •	Jefes Finales: enemigos de gran tamaño con múltiples fases y habilidades especiales.
-Recursos
+
+**Recursos**
+
 Durante las partidas el jugador administra diferentes recursos:
+
 •	Energía: utilizada para construir nuevas torretas y realizar mejoras.
+
 •	Créditos Galácticos: obtenidos al completar misiones y empleados para desbloquear tecnologías y mejoras permanentes.
-Power-Ups
+
+**Power-Ups**
+
 Son habilidades especiales de uso temporal que ayudan al jugador en situaciones críticas.
+
 Ejemplos:
+
 •	Bombardeo Orbital.
+
 •	Congelación Temporal.
+
 •	Sobrecarga Energética.
+
 •	Escudo de Emergencia.
+
 •	Tormenta Electromagnética.
-Eventos Dinámicos
+
+**Eventos Dinámicos**
+
 Son sucesos aleatorios que modifican temporalmente las condiciones del combate y obligan al jugador a adaptar su estrategia.
+
 Ejemplos:
+
 •	Tormenta Solar.
+
 •	Lluvia de Meteoritos.
+
 •	Interferencia Cósmica.
+
 •	Portal Inestable.
+
 •	Eclipse Galáctico.
-Interfaz de Usuario (HUD)
+
+**Interfaz de Usuario (HUD)**
+
 La interfaz proporciona toda la información necesaria durante la partida, incluyendo:
+
 •	Vida del núcleo energético.
+
 •	Recursos disponibles.
+
 •	Cantidad de oleadas restantes.
+
 •	Estado de las torretas.
+
 •	Botones de construcción y mejora.
+
 •	Indicadores de victoria o derrota.
 
 

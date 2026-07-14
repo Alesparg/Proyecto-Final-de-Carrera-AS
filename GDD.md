@@ -42,8 +42,9 @@ A nivel de producto, se busca crear una experiencia entretenida, accesible y des
 A nivel académico, el proyecto tiene como finalidad aplicar los conocimientos adquiridos durante la carrera de Tecnicatura en Diseño y Programación de Videojuegos, poniendo en práctica conceptos de diseño de videojuegos, programación, desarrollo de mecánicas, diseño de interfaces, balance de juego y gestión de proyectos. Además, busca servir como experiencia integral de desarrollo y como una pieza representativa para el portafolio profesional del alumno
 
 ### 2.2 Diseño e investigación
-Definición de idea
+**Definición de idea**
 Defensa de Colonias Espaciales es un videojuego de estrategia del género Tower Defense ambientado en un futuro donde la humanidad ha abandonado la Tierra y sobrevive en colonias espaciales distribuidas por la galaxia. El jugador controla a ATLAS, una inteligencia artificial militar encargada de proteger los núcleos energéticos de las colonias frente a la invasión de una raza extraterrestre. Para lograrlo deberá construir y mejorar torretas, administrar recursos, investigar nuevas tecnologías y adaptarse a diferentes tipos de enemigos y eventos dinámicos que modificarán el desarrollo de cada partida.
+
 Género
 •	Estrategia.
 •	Tower Defense.

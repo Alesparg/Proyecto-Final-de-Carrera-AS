@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://objects/turret.gd" id="1"]
+[ext_resource type="PackedScene" path="res://objects/turret_projectile.tscn" id="2"]
+
+[node name="turret" type="Node2D"]
+script = ExtResource("1")
+turret_id = "basic"
+display_name = "Basica"
+build_cost = 50
+projectile_scene = ExtResource("2")
+
+[node name="Base" type="Polygon2D" parent="."]
+color = Color(0.35, 0.55, 0.85, 1)
+polygon = PackedVector2Array(-14, 8, 0, -10, 14, 8, 0, 14)
+
+[node name="Barrel" type="Polygon2D" parent="."]
+color = Color(0.5, 0.7, 1, 1)
+polygon = PackedVector2Array(0, -3, 18, 0, 0, 3)
+
+[node name="RangeIndicator" type="Line2D" parent="."]
+modulate = Color(0.4, 0.6, 1, 0.15)
+width = 1.0
+closed = true
+points = PackedVector2Array(210, 0, 148.49, 148.49, 0, 210, -148.49, 148.49, -210, 0, -148.49, -148.49, 0, -210, 148.49, -148.49)
+
+[node name="LevelLabel" type="Label" parent="."]
+offset_left = -8.0
+offset_top = -28.0
+offset_right = 8.0
+offset_bottom = -12.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 2
+theme_override_font_sizes/font_size = 11
+text = "1"
+horizontal_alignment = 1

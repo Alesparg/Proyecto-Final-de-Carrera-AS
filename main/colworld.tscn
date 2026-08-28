@@ -1,0 +1,176 @@
+[gd_scene format=3 uid="uid://bwn8nmwi8baxx"]
+
+[ext_resource type="Script" uid="uid://s6xxji1hupqd" path="res://main/colworld.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://cne50wqrctu0x" path="res://levels/level1.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://objects/turret_slot.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://objects/base.tscn" id="6"]
+
+[node name="colworld" type="Node2D" unique_id=1223601449]
+script = ExtResource("1")
+turret_slot_scene = ExtResource("5")
+
+[node name="level" parent="." unique_id=1031332205 instance=ExtResource("2")]
+position = Vector2(1496, 404)
+
+[node name="Path2D" type="Path2D" parent="." unique_id=7005015]
+
+[node name="Base" parent="." unique_id=1180603732 instance=ExtResource("6")]
+position = Vector2(832, 512)
+
+[node name="TurretSlots" type="Node2D" parent="." unique_id=1483108336]
+
+[node name="Turrets" type="Node2D" parent="." unique_id=1674955575]
+
+[node name="Enemies" type="Node2D" parent="." unique_id=904980520]
+
+[node name="Projectiles" type="Node2D" parent="." unique_id=1464195211]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1143921943]
+position = Vector2(-3, 6)
+anchor_mode = 0
+zoom = Vector2(0.78, 0.78)
+
+[node name="ui" type="CanvasLayer" parent="." unique_id=1302843952]
+
+[node name="credits_label" type="Label" parent="ui" unique_id=1062820645]
+offset_left = 14.0
+offset_top = 14.0
+offset_right = 198.0
+offset_bottom = 40.0
+theme_override_colors/font_color = Color(1, 0.92, 0.4, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 3
+theme_override_font_sizes/font_size = 18
+text = "Creditos: 120"
+
+[node name="wave_label" type="Label" parent="ui" unique_id=665563979]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -80.0
+offset_top = 12.0
+offset_right = 80.0
+offset_bottom = 36.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.85, 0.9, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 3
+theme_override_font_sizes/font_size = 18
+text = "Oleada: 1 / 5"
+horizontal_alignment = 1
+
+[node name="base_hp_label" type="Label" parent="ui" unique_id=1225269822]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -180.0
+offset_top = 12.0
+offset_right = -16.0
+offset_bottom = 36.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0.4, 1, 0.5, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 3
+theme_override_font_sizes/font_size = 18
+text = "Base: 20 / 20"
+horizontal_alignment = 2
+
+[node name="message_label" type="Label" parent="ui" unique_id=2084424578]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -250.0
+offset_top = -80.0
+offset_right = 250.0
+offset_bottom = -52.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 3
+theme_override_font_sizes/font_size = 16
+text = "Clic en un punto verde para construir torretas"
+horizontal_alignment = 1
+
+[node name="hint_label" type="Label" parent="ui" unique_id=622483802]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -380.0
+offset_top = -44.0
+offset_right = 380.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.75, 0.8, 0.85, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 2
+theme_override_font_sizes/font_size = 13
+text = "1/2/3: tipo de torreta | Mejorar: clic en torreta (75/100 cr)"
+horizontal_alignment = 1
+
+[node name="turret_bar" type="HBoxContainer" parent="ui" unique_id=881234567]
+offset_left = 14.0
+offset_top = 44.0
+offset_right = 520.0
+offset_bottom = 84.0
+theme_override_constants/separation = 8
+
+[node name="youwin" type="Label" parent="ui" unique_id=442800855]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -24.0
+offset_right = 300.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.129412, 1, 0.0313726, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 4
+theme_override_font_sizes/font_size = 28
+text = "VICTORIA - Base protegida"
+horizontal_alignment = 1
+
+[node name="gameover" type="Label" parent="ui" unique_id=64092375]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -60.0
+offset_right = 120.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.137255, 0.137255, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 4
+theme_override_font_sizes/font_size = 28
+text = "DERROTA"
+horizontal_alignment = 1
+
+[node name="restart_button" type="Button" parent="ui" unique_id=313556417]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -84.0
+offset_top = 8.0
+offset_right = 84.0
+offset_bottom = 48.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Reiniciar"

@@ -1,26 +1,145 @@
 extends Node2D
 
-const PATH_POINTS := [
-	Vector2(64, 512),
-	Vector2(64, 128),
-	Vector2(320, 128),
-	Vector2(320, 512),
-	Vector2(576, 512),
-	Vector2(576, 128),
-	Vector2(832, 128),
-	Vector2(832, 512),
-]
+const LEVEL_CONFIGS := {
+	1: {
+		"path_points": [
+			Vector2(64, 512),
+			Vector2(64, 128),
+			Vector2(320, 128),
+			Vector2(320, 512),
+			Vector2(576, 512),
+			Vector2(576, 128),
+			Vector2(832, 128),
+			Vector2(832, 512),
+		],
+		"turret_slot_positions": [
+			Vector2(192, 320),
+			Vector2(192, 640),
+			Vector2(448, 224),
+			Vector2(448, 416),
+			Vector2(448, 640),
+			Vector2(704, 320),
+			Vector2(704, 640),
+			Vector2(896, 320),
+		],
+		"base_position": Vector2(832, 512),
+	},
+	2: {
+		"path_points": [
+			Vector2(64, 320),
+			Vector2(192, 320),
+			Vector2(192, 128),
+			Vector2(448, 128),
+			Vector2(448, 512),
+			Vector2(704, 512),
+			Vector2(704, 128),
+			Vector2(960, 128),
+			Vector2(960, 512),
+		],
+		"turret_slot_positions": [
+			Vector2(128, 416),
+			Vector2(128, 224),
+			Vector2(320, 224),
+			Vector2(320, 416),
+			Vector2(576, 224),
+			Vector2(576, 416),
+			Vector2(832, 224),
+			Vector2(832, 416),
+		],
+		"base_position": Vector2(960, 512),
+	},
+	3: {
+		"path_points": [
+			Vector2(512, 640),  # Start from bottom center
+			Vector2(512, 480),
+			Vector2(320, 480),
+			Vector2(320, 320),
+			Vector2(704, 320),
+			Vector2(704, 160),
+			Vector2(896, 160), # Exit top right
+		],
+		"turret_slot_positions": [
+			Vector2(416, 560),
+			Vector2(608, 400),
+			Vector2(224, 240),
+			Vector2(800, 240),
+			Vector2(224, 400),
+			Vector2(768, 400),
+			Vector2(512, 80),
+			Vector2(576, 560),
+		],
+		"base_position": Vector2(896, 160),
+	},
+	4: {
+		"path_points": [
+			Vector2(64, 640),  # Start from bottom left
+			Vector2(64, 480),
+			Vector2(320, 480),
+			Vector2(320, 320),
+			Vector2(192, 320),
+			Vector2(192, 160),
+			Vector2(512, 160),
+			Vector2(512, 320),
+			Vector2(704, 320),
+			Vector2(704, 480),
+			Vector2(960, 480), # Exit right
+		],
+		"turret_slot_positions": [
+			Vector2(128, 560),
+			Vector2(256, 400),
+			Vector2(384, 400),
+			Vector2(128, 240),
+			Vector2(384, 240),
+			Vector2(576, 240),
+			Vector2(576, 400),
+			Vector2(832, 400),
+			Vector2(832, 560),
+		],
+		"base_position": Vector2(960, 480),
+	},
+	5: {
+		"path_points": [
+			Vector2(64, 320),    # Entrada principal
+			Vector2(256, 320),   # Punto de bifurcación
+		],
+		"upper_path": [        # Camino superior (línea roja)
+			Vector2(256, 160),
+			Vector2(384, 160),
+			Vector2(512, 160),
+			Vector2(640, 160),
+			Vector2(768, 160),
+			Vector2(768, 320),
+		],
+		"lower_path": [        # Camino inferior (línea naranja)
+			Vector2(256, 480),
+			Vector2(384, 480),
+			Vector2(512, 480),
+			Vector2(640, 480),
+			Vector2(768, 480),
+			Vector2(768, 320),
+		],
+		"final_path": [        # Camino final después de reunión
+			Vector2(768, 320),
+			Vector2(832, 320),
+			Vector2(832, 512),
+		],
+		"turret_slot_positions": [
+			Vector2(160, 240),
+			Vector2(160, 400),
+			Vector2(320, 240),
+			Vector2(320, 400),
+			Vector2(512, 240),
+			Vector2(512, 400),
+			Vector2(704, 240),
+			Vector2(704, 400),
+		],
+		"base_position": Vector2(832, 512),
+	},
+}
 
-const TURRET_SLOT_POSITIONS := [
-	Vector2(192, 320),
-	Vector2(192, 640),
-	Vector2(448, 224),
-	Vector2(448, 416),
-	Vector2(448, 640),
-	Vector2(704, 320),
-	Vector2(704, 640),
-	Vector2(896, 320),
-]
+var current_level: int = 1
+var PATH_POINTS: Array = []
+var TURRET_SLOT_POSITIONS: Array = []
 
 const WAVES := [
 	{"count": 5, "interval": 2.2, "health": 6, "speed": 65.0, "reward": 6, "mix": {"basic": 1.0}},
@@ -47,6 +166,7 @@ const ENEMY_SCENE := preload("res://objects/td_enemy.tscn")
 @onready var base_node: Area2D = $Base
 @onready var enemies_container: Node2D = $Enemies
 @onready var turret_slots_container: Node2D = $TurretSlots
+@onready var level_node: Node2D = $level
 
 @onready var credits_label: Label = $ui/credits_label
 @onready var wave_label: Label = $ui/wave_label
@@ -57,6 +177,8 @@ const ENEMY_SCENE := preload("res://objects/td_enemy.tscn")
 @onready var restart_button: Button = $ui/restart_button
 @onready var hint_label: Label = $ui/hint_label
 @onready var turret_bar: HBoxContainer = $ui/turret_bar
+var next_level_button: Button
+var exit_button: Button
 
 var credits: int = STARTING_CREDITS
 var current_wave: int = 0
@@ -72,9 +194,13 @@ var _game_won: bool = false
 var _current_wave_data: Dictionary = {}
 var _wave_spawn_index: int = 0
 var _turret_pick_buttons: Array[Button] = []
+var _enemy_path_alternator: bool = false  # Para alternar caminos en nivel 5
+var _level5_enemy_index: int = 0  # Para enemigos deterministas en nivel 5
 
 
 func _ready() -> void:
+	current_level = Globals.get_level()
+	_load_level_config()
 	_setup_path()
 	_spawn_turret_slots()
 	_setup_turret_bar()
@@ -89,6 +215,46 @@ func _ready() -> void:
 
 	base_hp_label.text = "Base: %d / %d" % [base_node.health, base_node.max_health]
 	_start_next_wave()
+
+
+func _load_level_config() -> void:
+	if LEVEL_CONFIGS.has(current_level):
+		var config: Dictionary = LEVEL_CONFIGS[current_level]
+		PATH_POINTS = config.path_points
+		TURRET_SLOT_POSITIONS = config.turret_slot_positions
+		if config.has("base_position"):
+			base_node.position = config.base_position
+		
+		# Cargar dinámicamente la escena del nivel correcto
+		_load_level_scene()
+	else:
+		# Fallback al nivel 1 si no existe
+		current_level = 1
+		_load_level_config()
+
+
+func _load_level_scene() -> void:
+	# Eliminar el nivel actual si existe
+	if level_node:
+		level_node.queue_free()
+	
+	# Cargar la escena del nivel correspondiente
+	var level_scene_path = "res://levels/level%d.tscn" % current_level
+	var level_scene = load(level_scene_path)
+	
+	if level_scene:
+		var new_level = level_scene.instantiate()
+		new_level.name = "level"
+		new_level.position = Vector2(1496, 404)  # Mantener la posición original
+		add_child(new_level)
+		level_node = new_level
+		print("Nivel %d cargado: %s" % [current_level, level_scene_path])
+	else:
+		print("Error: No se pudo cargar el nivel %d" % current_level)
+
+
+func set_level(level: int) -> void:
+	current_level = level
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -220,15 +386,99 @@ func _pick_enemy_type() -> String:
 
 
 func _spawn_enemy() -> void:
-	var enemy_type := _pick_enemy_type()
+	var enemy_type: String
+	
+	# Lógica especial para nivel 5: enemigos deterministas
+	if current_level == 5:
+		enemy_type = _get_deterministic_enemy_type()
+	else:
+		enemy_type = _pick_enemy_type()
+	
 	var enemy: Area2D = ENEMY_SCENE.instantiate()
 	enemies_container.add_child(enemy)
-	enemy.configure_from_wave(enemy_type, path_2d, _current_wave_data)
+	
+	# Lógica especial para nivel 5: alternar caminos deterministamente
+	if current_level == 5:
+		_setup_level5_path(enemy, enemy_type)
+		_enemy_path_alternator = !_enemy_path_alternator  # Alternar para el siguiente enemigo
+		_level5_enemy_index += 1  # Avanzar en la secuencia determinista
+	else:
+		enemy.configure_from_wave(enemy_type, path_2d, _current_wave_data)
+	
 	enemy.died.connect(_on_enemy_died)
 	enemy.reached_base.connect(_on_enemy_reached_base)
 	enemy.progress = -float(_wave_spawn_index) * SPAWN_STAGGER_DISTANCE
 	_wave_spawn_index += 1
 	_enemies_alive += 1
+
+
+func _get_deterministic_enemy_type() -> String:
+	# Secuencia determinista de enemigos para nivel 5
+	# Máximo 3 tanques por ronda, patrón consistente
+	
+	var level5_enemy_sequences = [
+		# Oleada 1: 5 enemigos básicos
+		["basic", "basic", "basic", "basic", "basic"],
+		
+		# Oleada 2: 8 enemigos, mezcla controlada
+		["basic", "basic", "basic", "basic", "runner", "runner", "basic", "basic"],
+		
+		# Oleada 3: 10 enemigos, 1 tanque máximo
+		["basic", "basic", "runner", "runner", "basic", "tank", "basic", "runner", "basic", "basic"],
+		
+		# Oleada 4: 12 enemigos, 2 tanques máximo
+		["basic", "runner", "basic", "tank", "runner", "basic", "basic", "tank", "runner", "basic", "basic", "runner"],
+		
+		# Oleada 5: 15 enemigos, 3 tanques máximo
+		["basic", "runner", "tank", "basic", "runner", "basic", "tank", "runner", "basic", "brute", "basic", "runner", "tank", "basic", "runner"],
+	]
+	
+	# Obtener la secuencia para la oleada actual (limitado a 5 oleadas)
+	var wave_index = mini(current_wave - 1, level5_enemy_sequences.size() - 1)
+	var sequence = level5_enemy_sequences[wave_index]
+	
+	# Obtener el tipo de enemigo basado en el índice actual
+	var enemy_index = _level5_enemy_index % sequence.size()
+	return sequence[enemy_index]
+
+
+func _setup_level5_path(enemy: Area2D, enemy_type: String) -> void:
+	var config: Dictionary = LEVEL_CONFIGS[5]
+	var base_path = config.path_points
+	var upper_path = config.upper_path
+	var lower_path = config.lower_path
+	var final_path = config.final_path
+	
+	# Construir el camino completo según el alternador
+	var complete_path: Array = []
+	
+	# Camino inicial común
+	for point in base_path:
+		complete_path.append(point)
+	
+	# Alternar entre caminos superior e inferior
+	if _enemy_path_alternator:
+		# Camino superior (línea roja)
+		for point in upper_path:
+			complete_path.append(point)
+	else:
+		# Camino inferior (línea naranja)
+		for point in lower_path:
+			complete_path.append(point)
+	
+	# Camino final común
+	for point in final_path:
+		complete_path.append(point)
+	
+	# Crear Path2D temporal para este enemigo
+	var temp_path = Path2D.new()
+	var curve = Curve2D.new()
+	for point in complete_path:
+		curve.add_point(point)
+	temp_path.curve = curve
+	
+	# Configurar el enemigo con el tipo correcto y el camino alternado
+	enemy.configure_from_wave(enemy_type, temp_path, _current_wave_data)
 
 
 func _on_enemy_died(enemy: Area2D) -> void:
@@ -296,6 +546,9 @@ func _win_game() -> void:
 	win_label.show()
 	message_label.text = "Todas las oleadas superadas"
 	hint_label.hide()
+	
+	# Crear botones de victoria directamente en la UI
+	_create_victory_buttons()
 
 
 func _lose_game() -> void:
@@ -317,3 +570,72 @@ func _update_ui() -> void:
 
 func _on_restart_button_pressed() -> void:
 	get_tree().reload_current_scene()
+
+
+func _create_victory_buttons() -> void:
+	# Crear fondo negro para el menú
+	var background = ColorRect.new()
+	background.color = Color(0, 0, 0, 0.9)
+	background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	background.z_index = 999
+	$ui.add_child(background)
+	
+	# Crear contenedor para el menú
+	var menu_container = VBoxContainer.new()
+	menu_container.anchors_preset = Control.PRESET_CENTER
+	menu_container.anchor_left = 0.5
+	menu_container.anchor_top = 0.5
+	menu_container.anchor_right = 0.5
+	menu_container.anchor_bottom = 0.5
+	menu_container.offset_left = -150
+	menu_container.offset_top = -100
+	menu_container.offset_right = 150
+	menu_container.offset_bottom = 100
+	menu_container.z_index = 1000
+	$ui.add_child(menu_container)
+	
+	# Crear label de victoria
+	var victory_label = Label.new()
+	victory_label.text = "¡VICTORIA - Base Protegida!"
+	victory_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	victory_label.add_theme_font_size_override("font_size", 32)
+	victory_label.add_theme_color_override("font_color", Color(0.2, 1, 0.2))
+	menu_container.add_child(victory_label)
+	
+	# Crear separador
+	var separator = Control.new()
+	separator.custom_minimum_size = Vector2(0, 30)
+	menu_container.add_child(separator)
+	
+	# Crear botón de siguiente nivel
+	next_level_button = Button.new()
+	next_level_button.text = "Jugar Nivel %d" % (current_level + 1)
+	next_level_button.custom_minimum_size = Vector2(250, 50)
+	next_level_button.add_theme_font_size_override("font_size", 18)
+	next_level_button.pressed.connect(_on_next_level_pressed)
+	menu_container.add_child(next_level_button)
+	
+	# Crear separador
+	var separator2 = Control.new()
+	separator2.custom_minimum_size = Vector2(0, 15)
+	menu_container.add_child(separator2)
+	
+	# Crear botón de salir
+	exit_button = Button.new()
+	exit_button.text = "Salir al Menú"
+	exit_button.custom_minimum_size = Vector2(250, 50)
+	exit_button.add_theme_font_size_override("font_size", 18)
+	exit_button.pressed.connect(_on_exit_pressed)
+	menu_container.add_child(exit_button)
+	
+	print("Menú de victoria creado con fondo negro")
+
+
+func _on_next_level_pressed() -> void:
+	if current_level + 1 <= 4:
+		Globals.set_level(current_level + 1)
+		get_tree().change_scene_to_file("res://main/colworld.tscn")
+
+
+func _on_exit_pressed() -> void:
+	get_tree().change_scene_to_file("res://main/menu_inicio.tscn")

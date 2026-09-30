@@ -1,6 +1,6 @@
-[gd_scene format=3 uid="uid://cne50wqrctu0x"]
+[gd_scene load_steps=5 format=4 uid="uid://cne50wqrctu0y"]
 
-[ext_resource type="Script" uid="uid://dh2iqrroufpi2" path="res://levels/level1.gd" id="1"]
+[ext_resource type="Script" path="res://levels/level2.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://dc40myds11obl" path="res://objects/obstacle.png" id="2"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_on5ov"]
@@ -17,16 +17,14 @@ physics_layer_0/collision_layer = 1
 physics_layer_0/physics_material = SubResource("PhysicsMaterial_on5ov")
 sources/0 = SubResource("TileSetAtlasSource_vnjib")
 
-[node name="level" type="Node2D" unique_id=1524683522]
+[node name="level" type="Node2D"]
 script = ExtResource("1")
 
-[node name="Floor" type="ColorRect" parent="." unique_id=1921033193]
-offset_left = 2.0
-offset_top = 1.0
-offset_right = 1026.0
-offset_bottom = 641.0
+[node name="Floor" type="ColorRect" parent="."]
+offset_right = 1024.0
+offset_bottom = 640.0
 color = Color(0.12, 0.14, 0.18, 1)
 
-[node name="TileLayer0" type="TileMapLayer" parent="." unique_id=1182534754]
+[node name="TileLayer0" type="TileMapLayer" parent="."]
 z_index = 1
 tile_set = SubResource("TileSet_xqlka")

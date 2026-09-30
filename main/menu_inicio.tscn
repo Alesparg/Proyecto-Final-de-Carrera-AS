@@ -42,7 +42,36 @@ vertical_alignment = 1
 
 [node name="Spacer" type="Control" parent="VBoxContainer"]
 layout_mode = 2
-custom_minimum_size = Vector2(0, 50)
+custom_minimum_size = Vector2(0, 30)
+
+[node name="Nivel1Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "NIVEL 1"
+toggle_mode = true
+
+[node name="Nivel2Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "NIVEL 2"
+toggle_mode = true
+
+[node name="Nivel3Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "NIVEL 3"
+toggle_mode = true
+
+[node name="Nivel4Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "NIVEL 4"
+toggle_mode = true
+
+[node name="Nivel5Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "NIVEL 5"
+toggle_mode = true
+
+[node name="Spacer2" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 20)
 
 [node name="JugarButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2

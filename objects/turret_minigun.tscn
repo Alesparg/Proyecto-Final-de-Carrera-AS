@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://objects/turret.gd" id="1"]
+[ext_resource type="PackedScene" path="res://objects/turret_projectile_small.tscn" id="2"]
+
+[node name="turret_minigun" type="Node2D"]
+script = ExtResource("1")
+turret_id = "minigun"
+display_name = "Mini Gun"
+build_cost = 45
+attack_range = 180.0
+fire_rate = 0.30
+damage = 0.25
+range_indicator_base = 180.0
+projectile_scene = ExtResource("2")
+
+[node name="Base" type="Polygon2D" parent="."]
+color = Color(0.35, 0.55, 0.85, 1)
+polygon = PackedVector2Array(-14, 8, 0, -10, 14, 8, 0, 14)
+
+[node name="Barrel" type="Polygon2D" parent="."]
+color = Color(0.5, 0.7, 1, 1)
+polygon = PackedVector2Array(0, -3, 18, 0, 0, 3)
+
+[node name="RangeIndicator" type="Line2D" parent="."]
+modulate = Color(0.4, 0.6, 1, 0.15)
+width = 1.0
+closed = true
+points = PackedVector2Array(180, 0, 127.28, 127.28, 0, 180, -127.28, 127.28, -180, 0, -127.28, -127.28, 0, -180, 127.28, -127.28)
+
+[node name="LevelLabel" type="Label" parent="."]
+offset_left = -8.0
+offset_top = -28.0
+offset_right = 8.0
+offset_bottom = -12.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 2
+theme_override_font_sizes/font_size = 11
+text = "1"
+horizontal_alignment = 1

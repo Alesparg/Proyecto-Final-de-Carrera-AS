@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://objects/turret.gd" id="1"]
+[ext_resource type="PackedScene" path="res://objects/turret_projectile.tscn" id="2"]
+
+[node name="turret_sniper_short" type="Node2D"]
+script = ExtResource("1")
+turret_id = "sniper_short"
+display_name = "Escopeta"
+build_cost = 80
+attack_range = 110.0
+fire_rate = 1.70
+damage = 5
+range_indicator_base = 110.0
+projectile_scene = ExtResource("2")
+
+[node name="Base" type="Polygon2D" parent="."]
+color = Color(0.6, 0.3, 0.8, 1)
+polygon = PackedVector2Array(-10, 8, 0, -10, 10, 8, 0, 10)
+
+[node name="Barrel" type="Polygon2D" parent="."]
+color = Color(0.8, 0.4, 1.0, 1)
+polygon = PackedVector2Array(0, -3, 20, 0, 0, 3)
+
+[node name="RangeIndicator" type="Line2D" parent="."]
+modulate = Color(0.6, 0.3, 0.8, 0.12)
+width = 1.0
+closed = true
+points = PackedVector2Array(110, 0, 77.78, 77.78, 0, 110, -77.78, 77.78, -110, 0, -77.78, -77.78, 0, -110, 77.78, -77.78)
+
+[node name="LevelLabel" type="Label" parent="."]
+offset_left = -8.0
+offset_top = -28.0
+offset_right = 8.0
+offset_bottom = -12.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 2
+theme_override_font_sizes/font_size = 11
+text = "1"
+horizontal_alignment = 1

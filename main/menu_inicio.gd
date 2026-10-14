@@ -14,11 +14,13 @@ func _ready() -> void:
 		$VBoxContainer/Nivel4Button.pressed.connect(_on_nivel4_pressed)
 	if has_node("VBoxContainer/Nivel5Button"):
 		$VBoxContainer/Nivel5Button.pressed.connect(_on_nivel5_pressed)
+	if has_node("VBoxContainer/Nivel6Button"):
+		$VBoxContainer/Nivel6Button.pressed.connect(_on_nivel6_pressed)
 	if has_node("VBoxContainer/JugarButton"):
 		$VBoxContainer/JugarButton.pressed.connect(_on_jugar_pressed)
 	if has_node("VBoxContainer/SalirButton"):
 		$VBoxContainer/SalirButton.pressed.connect(_on_salir_pressed)
-	
+
 	_update_nivel_selection()
 
 func _on_nivel1_pressed() -> void:
@@ -41,6 +43,10 @@ func _on_nivel5_pressed() -> void:
 	selected_level = 5
 	_update_nivel_selection()
 
+func _on_nivel6_pressed() -> void:
+	selected_level = 6
+	_update_nivel_selection()
+
 func _update_nivel_selection() -> void:
 	if has_node("VBoxContainer/Nivel1Button"):
 		$VBoxContainer/Nivel1Button.button_pressed = (selected_level == 1)
@@ -52,6 +58,8 @@ func _update_nivel_selection() -> void:
 		$VBoxContainer/Nivel4Button.button_pressed = (selected_level == 4)
 	if has_node("VBoxContainer/Nivel5Button"):
 		$VBoxContainer/Nivel5Button.button_pressed = (selected_level == 5)
+	if has_node("VBoxContainer/Nivel6Button"):
+		$VBoxContainer/Nivel6Button.button_pressed = (selected_level == 6)
 
 func _on_jugar_pressed() -> void:
 	Globals.set_level(selected_level)

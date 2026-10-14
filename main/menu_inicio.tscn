@@ -69,6 +69,11 @@ layout_mode = 2
 text = "NIVEL 5"
 toggle_mode = true
 
+[node name="Nivel6Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "NIVEL 6"
+toggle_mode = true
+
 [node name="Spacer2" type="Control" parent="VBoxContainer"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 20)

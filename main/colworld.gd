@@ -135,6 +135,45 @@ const LEVEL_CONFIGS := {
 		],
 		"base_position": Vector2(832, 512),
 	},
+	6: {
+		"spawn_points": [      # Dos puntos de entrada para enemigos
+			Vector2(64, 160),   # Entrada superior izquierda
+			Vector2(64, 480),   # Entrada inferior izquierda
+		],
+		"path_points": [
+			Vector2(64, 160),   # Camino desde entrada superior
+			Vector2(256, 160),
+			Vector2(256, 320),
+			Vector2(448, 320),
+			Vector2(448, 160),
+			Vector2(640, 160),
+			Vector2(640, 320),
+			Vector2(832, 320),
+			Vector2(832, 512),
+		],
+		"secondary_path": [    # Camino desde entrada inferior
+			Vector2(64, 480),
+			Vector2(256, 480),
+			Vector2(256, 320),
+			Vector2(448, 320),
+			Vector2(448, 480),
+			Vector2(640, 480),
+			Vector2(640, 320),
+			Vector2(832, 320),
+			Vector2(832, 512),
+		],
+		"turret_slot_positions": [
+			Vector2(160, 240),
+			Vector2(160, 400),
+			Vector2(320, 240),
+			Vector2(320, 400),
+			Vector2(512, 240),
+			Vector2(512, 400),
+			Vector2(704, 240),
+			Vector2(704, 400),
+		],
+		"base_position": Vector2(832, 512),
+	},
 }
 
 var current_level: int = 1
@@ -144,18 +183,20 @@ var TURRET_SLOT_POSITIONS: Array = []
 const WAVES := [
 	{"count": 5, "interval": 2.2, "health": 6, "speed": 65.0, "reward": 6, "mix": {"basic": 1.0}},
 	{"count": 8, "interval": 1.9, "health": 9, "speed": 68.0, "reward": 7, "mix": {"basic": 0.65, "runner": 0.35}},
-	{"count": 10, "interval": 1.6, "health": 12, "speed": 72.0, "reward": 8, "mix": {"basic": 0.45, "runner": 0.35, "tank": 0.2}},
-	{"count": 12, "interval": 1.4, "health": 15, "speed": 76.0, "reward": 9, "mix": {"basic": 0.3, "runner": 0.25, "tank": 0.25, "brute": 0.2}},
-	{"count": 15, "interval": 1.2, "health": 18, "speed": 80.0, "reward": 10, "mix": {"basic": 0.2, "runner": 0.25, "tank": 0.3, "brute": 0.25}},
+	{"count": 10, "interval": 1.6, "health": 12, "speed": 72.0, "reward": 8, "mix": {"basic": 0.35, "runner": 0.35, "tank": 0.2, "shield": 0.1}},
+	{"count": 12, "interval": 1.4, "health": 15, "speed": 76.0, "reward": 9, "mix": {"basic": 0.25, "runner": 0.25, "tank": 0.2, "brute": 0.2, "shield": 0.1}},
+	{"count": 15, "interval": 1.2, "health": 18, "speed": 80.0, "reward": 10, "mix": {"basic": 0.15, "runner": 0.2, "tank": 0.25, "brute": 0.25, "shield": 0.15, "swarm": 0.05}},
 ]
 
 const SPAWN_STAGGER_DISTANCE := 56.0
 const STARTING_CREDITS := 90
 
 const TURRET_OPTIONS := [
-	{"id": "basic", "scene": preload("res://objects/turret.tscn"), "label": "Basica", "cost": 50},
-	{"id": "sniper", "scene": preload("res://objects/turret_sniper.tscn"), "label": "Francotirador", "cost": 90},
-	{"id": "cannon", "scene": preload("res://objects/turret_cannon.tscn"), "label": "Canon", "cost": 75},
+	{"id": "basic", "scene": preload("res://objects/turret.tscn"), "label": "Basica", "cost": 50, "min_level": 1},
+	{"id": "sniper", "scene": preload("res://objects/turret_sniper.tscn"), "label": "Francotirador", "cost": 90, "min_level": 1},
+	{"id": "cannon", "scene": preload("res://objects/turret_cannon.tscn"), "label": "Canon", "cost": 75, "min_level": 1},
+	{"id": "sniper_short", "scene": preload("res://objects/turret_sniper_short.tscn"), "label": "Escopeta", "cost": 80, "min_level": 4},
+	{"id": "minigun", "scene": preload("res://objects/turret_minigun.tscn"), "label": "Mini Gun", "cost": 45, "min_level": 6},
 ]
 
 const ENEMY_SCENE := preload("res://objects/td_enemy.tscn")
@@ -196,6 +237,7 @@ var _wave_spawn_index: int = 0
 var _turret_pick_buttons: Array[Button] = []
 var _enemy_path_alternator: bool = false  # Para alternar caminos en nivel 5
 var _level5_enemy_index: int = 0  # Para enemigos deterministas en nivel 5
+var _level6_spawn_alternator: bool = false  # Para alternar puntos de spawn en nivel 6
 
 
 func _ready() -> void:
@@ -237,11 +279,11 @@ func _load_level_scene() -> void:
 	# Eliminar el nivel actual si existe
 	if level_node:
 		level_node.queue_free()
-	
+
 	# Cargar la escena del nivel correspondiente
 	var level_scene_path = "res://levels/level%d.tscn" % current_level
 	var level_scene = load(level_scene_path)
-	
+
 	if level_scene:
 		var new_level = level_scene.instantiate()
 		new_level.name = "level"
@@ -306,6 +348,12 @@ func _setup_path() -> void:
 func _setup_turret_bar() -> void:
 	for i in TURRET_OPTIONS.size():
 		var opt: Dictionary = TURRET_OPTIONS[i]
+		
+		# Solo mostrar torretas disponibles para el nivel actual
+		var min_level = opt.get("min_level", 1)
+		if current_level < min_level:
+			continue
+		
 		var btn := Button.new()
 		btn.text = "%s (%d)" % [opt.label, opt.cost]
 		btn.toggle_mode = true
@@ -314,7 +362,10 @@ func _setup_turret_bar() -> void:
 		btn.pressed.connect(func() -> void: _select_turret_type(idx))
 		turret_bar.add_child(btn)
 		_turret_pick_buttons.append(btn)
-	_turret_pick_buttons[0].button_pressed = true
+	
+	# Seleccionar la primera disponible por defecto
+	if _turret_pick_buttons.size() > 0:
+		_turret_pick_buttons[0].button_pressed = true
 
 
 func _select_turret_type(index: int) -> void:
@@ -372,6 +423,9 @@ func _pick_enemy_type() -> String:
 	var mix: Dictionary = _current_wave_data.get("mix", {"basic": 1.0})
 	var total_weight := 0.0
 	for type_id in mix:
+		# El enjambre solo aparece desde el nivel 5
+		if type_id == "swarm" and current_level < 5:
+			continue
 		total_weight += float(mix[type_id])
 	if total_weight <= 0.0:
 		return "basic"
@@ -379,6 +433,9 @@ func _pick_enemy_type() -> String:
 	var threshold := randf() * total_weight
 	var accumulated := 0.0
 	for type_id in mix:
+		# El enjambre solo aparece desde el nivel 5
+		if type_id == "swarm" and current_level < 5:
+			continue
 		accumulated += float(mix[type_id])
 		if threshold <= accumulated:
 			return str(type_id)
@@ -387,24 +444,33 @@ func _pick_enemy_type() -> String:
 
 func _spawn_enemy() -> void:
 	var enemy_type: String
-	
+
 	# Lógica especial para nivel 5: enemigos deterministas
 	if current_level == 5:
 		enemy_type = _get_deterministic_enemy_type()
 	else:
 		enemy_type = _pick_enemy_type()
-	
+
+	# Sistema de enjambre: si es swarm, spawnea múltiples criaturas pequeñas
+	if enemy_type == "swarm":
+		_spawn_swarm()
+		return
+
 	var enemy: Area2D = ENEMY_SCENE.instantiate()
 	enemies_container.add_child(enemy)
-	
+
 	# Lógica especial para nivel 5: alternar caminos deterministamente
 	if current_level == 5:
 		_setup_level5_path(enemy, enemy_type)
 		_enemy_path_alternator = !_enemy_path_alternator  # Alternar para el siguiente enemigo
 		_level5_enemy_index += 1  # Avanzar en la secuencia determinista
+	# Lógica especial para nivel 6: alternar puntos de spawn
+	elif current_level == 6:
+		_setup_level6_path(enemy, enemy_type)
+		_level6_spawn_alternator = !_level6_spawn_alternator  # Alternar punto de spawn
 	else:
 		enemy.configure_from_wave(enemy_type, path_2d, _current_wave_data)
-	
+
 	enemy.died.connect(_on_enemy_died)
 	enemy.reached_base.connect(_on_enemy_reached_base)
 	enemy.progress = -float(_wave_spawn_index) * SPAWN_STAGGER_DISTANCE
@@ -412,25 +478,76 @@ func _spawn_enemy() -> void:
 	_enemies_alive += 1
 
 
+func _spawn_swarm() -> void:
+	# Sistema de enjambre: spawnea 5 criaturas pequeñas en formación 2-2-1
+	var swarm_size = 5
+	var swarm_spacing = 12.0  # Espacio entre criaturas (más juntas)
+
+	# Formación 2-2-1: dos arriba, dos abajo, uno en el centro
+	var swarm_offsets = [
+		Vector2(-swarm_spacing, -swarm_spacing),  # Arriba izquierda
+		Vector2(swarm_spacing, -swarm_spacing),   # Arriba derecha
+		Vector2(0, 0),                            # Centro
+		Vector2(-swarm_spacing, swarm_spacing),   # Abajo izquierda
+		Vector2(swarm_spacing, swarm_spacing),    # Abajo derecha
+	]
+
+	# Usar el mismo progreso para todas las criaturas del enjambre
+	var swarm_progress = -float(_wave_spawn_index) * SPAWN_STAGGER_DISTANCE
+
+	for i in range(swarm_size):
+		var enemy: Area2D = ENEMY_SCENE.instantiate()
+		enemies_container.add_child(enemy)
+
+		# Lógica especial para nivel 5: alternar caminos deterministamente
+		if current_level == 5:
+			_setup_level5_path(enemy, "swarm")
+			# Solo alternar en la primera criatura del enjambre
+			if i == 0:
+				_enemy_path_alternator = !_enemy_path_alternator
+				_level5_enemy_index += 1
+		# Lógica especial para nivel 6: alternar puntos de spawn
+		elif current_level == 6:
+			_setup_level6_path(enemy, "swarm")
+			# Solo alternar en la primera criatura del enjambre
+			if i == 0:
+				_level6_spawn_alternator = !_level6_spawn_alternator
+		else:
+			enemy.configure_from_wave("swarm", path_2d, _current_wave_data)
+
+		enemy.died.connect(_on_enemy_died)
+		enemy.reached_base.connect(_on_enemy_reached_base)
+
+		# Todas las criaturas tienen el mismo progreso (mismo punto en el camino)
+		enemy.progress = swarm_progress
+		# Aplicar offset para formación 2-2-1
+		enemy.global_position += swarm_offsets[i]
+
+		_enemies_alive += 1
+
+	# Solo incrementar el índice de spawn una vez para todo el enjambre
+	_wave_spawn_index += 1
+
+
 func _get_deterministic_enemy_type() -> String:
 	# Secuencia determinista de enemigos para nivel 5
 	# Máximo 3 tanques por ronda, patrón consistente
 	
 	var level5_enemy_sequences = [
-		# Oleada 1: 5 enemigos básicos
-		["basic", "basic", "basic", "basic", "basic"],
+		# Oleada 1: 5 enemigos básicos + 1 enjambre
+		["basic", "basic", "swarm", "basic", "basic", "basic"],
 		
-		# Oleada 2: 8 enemigos, mezcla controlada
-		["basic", "basic", "basic", "basic", "runner", "runner", "basic", "basic"],
+		# Oleada 2: 8 enemigos, mezcla controlada + 1 enjambre
+		["basic", "basic", "basic", "runner", "runner", "swarm", "basic", "basic"],
 		
-		# Oleada 3: 10 enemigos, 1 tanque máximo
-		["basic", "basic", "runner", "runner", "basic", "tank", "basic", "runner", "basic", "basic"],
+		# Oleada 3: 10 enemigos, 1 tanque máximo + 1 enjambre
+		["basic", "basic", "runner", "runner", "swarm", "tank", "basic", "runner", "basic", "basic"],
 		
-		# Oleada 4: 12 enemigos, 2 tanques máximo
-		["basic", "runner", "basic", "tank", "runner", "basic", "basic", "tank", "runner", "basic", "basic", "runner"],
+		# Oleada 4: 12 enemigos, 2 tanques máximo + 1 enjambre
+		["basic", "runner", "basic", "tank", "runner", "basic", "swarm", "tank", "runner", "basic", "basic", "runner"],
 		
-		# Oleada 5: 15 enemigos, 3 tanques máximo
-		["basic", "runner", "tank", "basic", "runner", "basic", "tank", "runner", "basic", "brute", "basic", "runner", "tank", "basic", "runner"],
+		# Oleada 5: 15 enemigos, 3 tanques máximo + 2 enjambres
+		["basic", "runner", "tank", "basic", "runner", "swarm", "tank", "runner", "basic", "brute", "basic", "runner", "tank", "swarm", "runner"],
 	]
 	
 	# Obtener la secuencia para la oleada actual (limitado a 5 oleadas)
@@ -476,8 +593,33 @@ func _setup_level5_path(enemy: Area2D, enemy_type: String) -> void:
 	for point in complete_path:
 		curve.add_point(point)
 	temp_path.curve = curve
-	
+
 	# Configurar el enemigo con el tipo correcto y el camino alternado
+	enemy.configure_from_wave(enemy_type, temp_path, _current_wave_data)
+
+
+func _setup_level6_path(enemy: Area2D, enemy_type: String) -> void:
+	var config: Dictionary = LEVEL_CONFIGS[6]
+	var primary_path = config.path_points  # Desde entrada superior
+	var secondary_path = config.secondary_path  # Desde entrada inferior
+
+	# Alternar entre puntos de spawn
+	var selected_path: Array = []
+	if _level6_spawn_alternator:
+		# Usar camino desde entrada superior
+		selected_path = primary_path
+	else:
+		# Usar camino desde entrada inferior
+		selected_path = secondary_path
+
+	# Crear Path2D temporal para este enemigo
+	var temp_path = Path2D.new()
+	var curve = Curve2D.new()
+	for point in selected_path:
+		curve.add_point(point)
+	temp_path.curve = curve
+
+	# Configurar el enemigo con el tipo correcto y el camino seleccionado
 	enemy.configure_from_wave(enemy_type, temp_path, _current_wave_data)
 
 
@@ -547,8 +689,8 @@ func _win_game() -> void:
 	message_label.text = "Todas las oleadas superadas"
 	hint_label.hide()
 	
-	# Crear botones de victoria directamente en la UI
-	_create_victory_buttons()
+	# Crear botones de victoria con sistema de estrellas
+	_create_victory_buttons_with_stars()
 
 
 func _lose_game() -> void:
@@ -572,7 +714,18 @@ func _on_restart_button_pressed() -> void:
 	get_tree().reload_current_scene()
 
 
-func _create_victory_buttons() -> void:
+func _create_victory_buttons_with_stars() -> void:
+	# Calcular estrellas basadas en la vida restante
+	var stars_earned: int
+	if base_node.health >= 16:
+		stars_earned = 3
+	elif base_node.health >= 10:
+		stars_earned = 2
+	else:
+		stars_earned = 1
+	
+	print("VICTORIA - Vida restante: ", base_node.health, " - Estrellas: ", stars_earned)
+	
 	# Crear fondo negro para el menú
 	var background = ColorRect.new()
 	background.color = Color(0, 0, 0, 0.9)
@@ -587,10 +740,10 @@ func _create_victory_buttons() -> void:
 	menu_container.anchor_top = 0.5
 	menu_container.anchor_right = 0.5
 	menu_container.anchor_bottom = 0.5
-	menu_container.offset_left = -150
-	menu_container.offset_top = -100
-	menu_container.offset_right = 150
-	menu_container.offset_bottom = 100
+	menu_container.offset_left = -200
+	menu_container.offset_top = -120
+	menu_container.offset_right = 200
+	menu_container.offset_bottom = 120
 	menu_container.z_index = 1000
 	$ui.add_child(menu_container)
 	
@@ -604,8 +757,31 @@ func _create_victory_buttons() -> void:
 	
 	# Crear separador
 	var separator = Control.new()
-	separator.custom_minimum_size = Vector2(0, 30)
+	separator.custom_minimum_size = Vector2(0, 20)
 	menu_container.add_child(separator)
+	
+	# Crear contenedor de estrellas
+	var stars_container = HBoxContainer.new()
+	stars_container.alignment = HBoxContainer.ALIGNMENT_CENTER
+	menu_container.add_child(stars_container)
+	
+	# Añadir estrellas según las ganadas
+	for i in range(3):
+		var star_label = Label.new()
+		if i < stars_earned:
+			star_label.text = "⭐"  # Estrella dorada
+			star_label.add_theme_color_override("font_color", Color(1, 0.8, 0, 1))  # Dorado
+		else:
+			star_label.text = "☆"  # Estrella vacía
+			star_label.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5, 1))  # Gris
+		
+		star_label.add_theme_font_size_override("font_size", 48)
+		stars_container.add_child(star_label)
+	
+	# Crear separador
+	var separator2 = Control.new()
+	separator2.custom_minimum_size = Vector2(0, 20)
+	menu_container.add_child(separator2)
 	
 	# Crear botón de siguiente nivel
 	next_level_button = Button.new()
@@ -616,9 +792,9 @@ func _create_victory_buttons() -> void:
 	menu_container.add_child(next_level_button)
 	
 	# Crear separador
-	var separator2 = Control.new()
-	separator2.custom_minimum_size = Vector2(0, 15)
-	menu_container.add_child(separator2)
+	var separator3 = Control.new()
+	separator3.custom_minimum_size = Vector2(0, 15)
+	menu_container.add_child(separator3)
 	
 	# Crear botón de salir
 	exit_button = Button.new()
@@ -632,7 +808,7 @@ func _create_victory_buttons() -> void:
 
 
 func _on_next_level_pressed() -> void:
-	if current_level + 1 <= 4:
+	if current_level + 1 <= 6:
 		Globals.set_level(current_level + 1)
 		get_tree().change_scene_to_file("res://main/colworld.tscn")
 

@@ -5,6 +5,15 @@ signal upgraded(turret: Node2D)
 const MAX_LEVEL := 3
 const UPGRADE_COSTS := [0, 120, 150]
 
+# Categorías de torretas para el sistema de ventajas/resistencias
+const TURRET_CATEGORIES := {
+	"basic": "small_caliber",      # Calibre pequeño (azul) - efectivo contra rápidos
+	"sniper": "medium_caliber",    # Calibre medio (naranja) - equilibrado
+	"sniper_short": "medium_caliber", # Calibre medio (morado) - escopeta corta alcance
+	"cannon": "large_caliber",     # Calibre grande (verde) - efectivo contra blindados
+	"minigun": "small_caliber",    # Calibre pequeño (mini gun) - muy rápida, poco daño
+}
+
 @export var turret_id: String = "basic"
 @export var display_name: String = "Basica"
 @export var build_cost: int = 50
@@ -81,8 +90,12 @@ func _shoot(target: Area2D) -> void:
 	var projectile := projectile_scene.instantiate()
 	get_tree().current_scene.get_node("Projectiles").add_child(projectile)
 	projectile.global_position = global_position
+	
+	# Pasar categoría de torreta para cálculo de multiplicadores
+	var turret_category = TURRET_CATEGORIES.get(turret_id, "medium_caliber")
+	
 	if projectile.has_method("setup"):
-		projectile.setup(target, damage, splash_radius)
+		projectile.setup(target, damage, splash_radius, turret_category)
 
 	if has_node("Barrel"):
 		$Barrel.look_at(target.global_position)
